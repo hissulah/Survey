@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * 5'  # Every Friday at 12am UTC
 
 jobs:
   run-jmeter:
@@ -61,14 +63,6 @@ jobs:
       with:
         name: jmeter-results
         path: results.jtl
-
-    - name: Read idClient and set as output
-      id: get-id
-      run: |
-        echo "===== ID CLIENT from JMeter ====="
-        cat idClient.txt
-        echo "idClient=$(cat idClient.txt)" >> $GITHUB_ENV
-
 
     - name: Upload JMeter Log
       uses: actions/upload-artifact@v4

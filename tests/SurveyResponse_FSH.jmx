@@ -34,12 +34,11 @@
           </elementProp>
           <elementProp name="PersonEmail" elementType="Argument">
             <stringProp name="Argument.name">PersonEmail</stringProp>
-            <stringProp name="Argument.value">housni.issulahabdoulhamid@chanel.com</stringProp>
+            <stringProp name="Argument.value">housni.issulahabdoulhamid${__Random(10000,99999)}@chanel.com</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </elementProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="00 - PROFILS AUTHENTICATION">
@@ -102,7 +101,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token" enabled="true">
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="Extract Token">
             <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
             <stringProp name="JSONPostProcessor.jsonPathExprs">$.access_token</stringProp>
             <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
@@ -118,7 +117,7 @@
             <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
           </BeanShellAssertion>
           <hashTree/>
-          <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters" enabled="true">
+          <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="User Parameters">
             <collectionProp name="UserParameters.names">
               <stringProp name="-265713450">username</stringProp>
               <stringProp name="1216985755">password</stringProp>
@@ -702,7 +701,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Global parameters" enabled="true">
+        <UserParameters guiclass="UserParametersGui" testclass="UserParameters" testname="Global parameters">
           <collectionProp name="UserParameters.names">
             <stringProp name="84303">URL</stringProp>
             <stringProp name="953725811">API_VERSION</stringProp>
@@ -746,19 +745,16 @@
 &#xd;
                 &quot;recordTypeId&quot; : &quot;@{rtRef.records[0].Id}&quot;,&#xd;
                 &quot;PersonEmail&quot; : &quot;${PersonEmail}&quot;,&#xd;
-                &quot;FirstName&quot;: &quot;FIRST_NAME : ${__time(yyyy-MM-dd-HH:mm:ss)}&quot;,&#xd;
-                &quot;LastName&quot;: &quot;ACCOUNT : ${__time(yyyy-MM-dd-HH:mm:ss)}&quot;,&#xd;
-	            &quot;LocationOfResidence__c&quot;: &quot;FR&quot;,&#xd;
-	            &quot;Optin_Email__pc&quot;: true,&#xd;
+                &quot;FirstName&quot;: &quot;${__time(yyyy-MM-dd-HH:mm:ss)}&quot;,&#xd;
+                &quot;LastName&quot;: &quot;${__time(yyyy-MM-dd-HH:mm:ss)}&quot;,&#xd;
+	            &quot;LocationOfResidence__c&quot;: &quot;IT&quot;,&#xd;
 	            &quot;Employee__c&quot;: false,&#xd;
 	            &quot;ParallelFlag__c&quot;: null,&#xd;
-	            &quot;ChannelMailOptin__c&quot;: true,&#xd;
 	            &quot;Client_UID__c&quot;: &quot;${UID}&quot;,&#xd;
 			  &quot;CustomerSourceIdReference__c&quot;: &quot;${UID}&quot;,&#xd;
 	            &quot;CustomerSourceEncrypted__c&quot; : &quot;${__time(yyyy-MM-dd-HH:mm:ss)}&quot;,&#xd;
-	            &quot;Billing_Country__pc&quot; : &quot;FR&quot;,&#xd;
+	            &quot;Billing_Country__pc&quot;: &quot;IT&quot;,&#xd;
 	            &quot;Salutation&quot;: &quot;titlems&quot;&#xd;
-&#xd;
             },&#xd;
             &quot;referenceId&quot; : &quot;accountRef&quot;&#xd;
         },&#xd;
@@ -860,7 +856,7 @@
             <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
           </RegexExtractor>
           <hashTree/>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Compteur de temps fixe">
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Compteur de temps fixe" enabled="true">
             <stringProp name="ConstantTimer.delay">60000</stringProp>
           </ConstantTimer>
           <hashTree/>
@@ -955,7 +951,7 @@
           </ConstantTimer>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="103 - SURVEY - TRANSACTION LINE BATCH" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="103 - SURVEY - TRANSACTION LINE BATCH">
           <stringProp name="HTTPSampler.domain">${URL}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">services/data/v${API_VERSION}/actions/custom/flow/Loyalty_Run_TransactionLine_Batch</stringProp>
@@ -997,7 +993,7 @@
           </ConstantTimer>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="104 - SURVEY - BATCH FSH" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="104 - SURVEY - BATCH FSH">
           <stringProp name="HTTPSampler.domain">${URL}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">/services/data/v${API_VERSION}/tooling/executeAnonymous/?anonymousBody=Database.executeBatch(new CCC_SurveyResponseCreationBatch(),200);</stringProp>
@@ -1034,7 +1030,7 @@
           </ConstantTimer>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="105 - SURVEY - GET SURVEY" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="105 - SURVEY - GET SURVEY">
           <stringProp name="HTTPSampler.domain">${URL}</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.path">services/data/v${API_VERSION}/composite</stringProp>
@@ -1092,7 +1088,7 @@
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>

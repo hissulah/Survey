@@ -1,4 +1,4 @@
-name: JMeter Test with Custom HTML Report
+name: JMeter SurveyFNB
 
 on:
   push:

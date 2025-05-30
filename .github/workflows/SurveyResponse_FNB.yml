@@ -1,0 +1,83 @@
+name: JMeter Test with Custom HTML Report
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  run-jmeter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Download JMeter
+      run: |
+        wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.6.3.tgz
+        tar -xzf apache-jmeter-5.6.3.tgz
+        mv apache-jmeter-5.6.3 jmeter
+        ls -l jmeter/bin/jmeter  # Vérification
+
+    - name: Run JMeter Test with Logs
+      run: |
+        ./jmeter/bin/jmeter -n \
+          -t tests/SurveyResponse_FNB.jmx \
+          -l results.jtl \
+          -j jmeter-execution.log \
+          -Jxstream.disable=true \
+          -LDEBUG
+
+    - name: Affichage .jtl Results
+      run: |
+        echo "===== Full JMeter .jtl Results ====="
+        cat results.jtl || true
+
+    - name: Log File (tail)
+      run: |
+        echo "===== JMeter Log File (tail) ====="
+        tail -n 50 jmeter-execution.log || true
+
+    - name: Install Python dependencies for HTML report
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install pandas jinja2 matplotlib seaborn
+
+    - name: Generate Custom HTML Report
+      run: |
+        python3 generate_report.py
+
+    - name: Upload JMeter Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: jmeter-results
+        path: results.jtl
+
+    - name: Read idClient and set as output
+      id: get-id
+      run: |
+        echo "===== ID CLIENT from JMeter ====="
+        cat idClient.txt
+        echo "idClient=$(cat idClient.txt)" >> $GITHUB_ENV
+
+
+    - name: Upload JMeter Log
+      uses: actions/upload-artifact@v4
+      with:
+        name: jmeter-log
+        path: jmeter-execution.log
+
+    - name: Upload Custom HTML Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: jmeter-custom-html-report
+        path: jmeter_custom_report.html
